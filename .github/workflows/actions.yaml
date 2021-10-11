@@ -1,0 +1,25 @@
+name: actions
+on: [push, pull_request]
+jobs:
+  actions:
+    name: actions
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get version
+        id: jjversion
+        uses: jjliggett/jjversion-action@v0.1.0
+      - name: Display jjversion outputs
+        run: |
+          echo "Major: ${{ steps.jjversion.outputs.major }}"
+          echo "Minor: ${{ steps.jjversion.outputs.minor }}"
+          echo "Patch: ${{ steps.jjversion.outputs.patch }}"
+          echo "MajorMinorPatch: ${{ steps.jjversion.outputs.majorMinorPatch }}"
+          echo "Sha: ${{ steps.jjversion.outputs.sha }}"
+          echo "ShortSha: ${{ steps.jjversion.outputs.shortSha }}"
